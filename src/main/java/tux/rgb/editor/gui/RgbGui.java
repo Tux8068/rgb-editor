@@ -152,7 +152,7 @@ public class RgbGui implements ActionListener {
 
         }
 
-        }
+    }
 }
 
 
