@@ -62,17 +62,17 @@ public class RgbGui implements ActionListener {
 
         valHexR = new JTextField(20);
         valHexR.setBounds(100, 30, 165, 25);
-        valHexR.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getRed() / 255 / 2)));
+        valHexR.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getBlue() / 255 / 2)));
         panel.add(valHexR);
 
         valHexG = new JTextField(20);
         valHexG.setBounds(100, 60, 165, 25);
-        valHexG.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getRed() / 255 / 2)));
+        valHexG.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getBlue() / 255 / 2)));
         panel.add(valHexG);
 
         valHexB = new JTextField(20);
         valHexB.setBounds(100, 90, 165, 25);
-        valHexB.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getRed() / 255 / 2)));
+        valHexB.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getBlue() / 255 / 2)));
         panel.add(valHexB);
 
         valDir = new JTextField(20);
@@ -92,7 +92,7 @@ public class RgbGui implements ActionListener {
         success.setForeground(Color.WHITE);
         panel.add(success);
         panel.setBackground(new Color(38, 38, 38, 236));
-        panel.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255, ColourUtils.getGreen() / 255, ColourUtils.getRed() / 255)));
+        panel.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255, ColourUtils.getGreen() / 255, ColourUtils.getBlue() / 255)));
 
         frame.setVisible(true);
         frame.setResizable(false);
