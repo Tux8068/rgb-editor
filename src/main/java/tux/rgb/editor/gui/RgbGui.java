@@ -1,13 +1,16 @@
 package tux.rgb.editor.gui;
 
-import tux.rgb.editor.util.*;
+import tux.rgb.editor.util.ColourUtils;
+import tux.rgb.editor.util.SearchUtil;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.nio.file.Path;
+import java.io.IOException;
 
 /**
  * @author Tuxiscool
@@ -111,54 +114,45 @@ public class RgbGui implements ActionListener {
 
         valDir.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
 
-
         File filedir = new File(valDir.getText());
+        for (File f : SearchUtil.getContaining(filedir)) {
+            if (f.getName().endsWith(".png")) {
+                System.out.println(f.getPath());
+                success.setText("Found Directory: " + filedir);
 
-        System.out.println(filedir);
+                try {
+                    BufferedImage image = ImageIO.read(f);
+                    for (int y = 0; y < image.getHeight(); y++) {
+                        for (int x = 0; x < image.getWidth(); x++) {
+                            int pixel = image.getRGB(x, y);
 
-        if (filedir.isDirectory()) {
-            Path path = filedir.toPath();
-            success.setText("Found Directory: " + filedir);
-           /* ArrayList<File> files = new ArrayList();
+                            int alpha = (pixel >> 24) & 0xff;
+                            int red = (pixel >> 16) & 0xff;
+                            int green = (pixel >> 8) & 0xff;
+                            int blue = pixel & 0xff;
 
-            try {
-                SearchUtil.search(path)
-                        .stream().filter(f -> f.getName().endsWith(".png"))
-                        .forEach(files::add);
+                            redPercent = (int) (Float.parseFloat(valHexR.getText()) / 255);
+                            greenPercent = (int) (Float.parseFloat(valHexG.getText()) / 255);
+                            bluePercent = (int) (Float.parseFloat(valHexB.getText()) / 255);
 
-                File inputImage = new File(files);
-                BufferedImage image = ImageIO.read(inputImage);
+                            pixel = (alpha << 24) | (redPercent * red / 100 << 16) | (greenPercent * green / 100 << 8) | (bluePercent * blue / 100);
 
-                for (int y = 0; y < image.getHeight(); y++) {
-                    for (int x = 0; x < image.getWidth(); x++) {
-                        int pixel = image.getRGB(x, y);
-
-                        int alpha = (pixel >> 24) & 0xff;
-                        int red = (pixel >> 16) & 0xff;
-                        int green = (pixel >> 8) & 0xff;
-                        int blue = pixel & 0xff;
-
-                        redPercent = (int) (Float.parseFloat(valHexR.getText()) / 255);
-                        greenPercent = (int) (Float.parseFloat(valHexR.getText()) / 255);
-                        bluePercent = (int) (Float.parseFloat(valHexR.getText()) / 255);
-
-                        pixel = (alpha << 24) | (redPercent * red / 100 << 16) | (greenPercent * green / 100 << 8) | (bluePercent * blue / 100);
-
-                        image.setRGB(x, y, pixel);
+                            image.setRGB(x, y, pixel);
+                        }
                     }
+
+                    ImageIO.write(image, "png", new File(String.valueOf((f))));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
 
-                ImageIO.write(image, "png", new File(("C:\\Users\\FiercePC\\Downloads\\test\\test2.png")));
-            } catch (IOException ex) {
-                ex.printStackTrace();
                 success.setText("Failed to save.");
             }
 
-*/
-        } else {
-            success.setText("Failed to filter.");
         }
-    }
+
+        }
 }
+
 
 

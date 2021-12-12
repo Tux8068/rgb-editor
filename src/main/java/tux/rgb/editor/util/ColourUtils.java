@@ -12,7 +12,7 @@ public class ColourUtils {
     public static float getRed() {
         Random red = new Random();
 
-        return red.nextFloat() * 255; //We could remove *255 here and /255 in RgbGui.java
+        return red.nextFloat() * 255;
     }
 
     public static float getGreen() {
