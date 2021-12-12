@@ -2,16 +2,12 @@ package tux.rgb.editor.gui;
 
 import tux.rgb.editor.util.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 
 /**
  * @author Tuxiscool
@@ -66,17 +62,17 @@ public class RgbGui implements ActionListener {
 
         valHexR = new JTextField(20);
         valHexR.setBounds(100, 30, 165, 25);
-        valHexR.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getred() / 255 / 2, ColourUtils.getgreen() / 255 / 2, ColourUtils.getred() / 255 / 2)));
+        valHexR.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getRed() / 255 / 2)));
         panel.add(valHexR);
 
         valHexG = new JTextField(20);
         valHexG.setBounds(100, 60, 165, 25);
-        valHexG.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getred() / 255 / 2, ColourUtils.getgreen() / 255 / 2, ColourUtils.getred() / 255 / 2)));
+        valHexG.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getRed() / 255 / 2)));
         panel.add(valHexG);
 
         valHexB = new JTextField(20);
         valHexB.setBounds(100, 90, 165, 25);
-        valHexB.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getred() / 255 / 2, ColourUtils.getgreen() / 255 / 2, ColourUtils.getred() / 255 / 2)));
+        valHexB.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getRed() / 255 / 2)));
         panel.add(valHexB);
 
         valDir = new JTextField(20);
@@ -96,7 +92,7 @@ public class RgbGui implements ActionListener {
         success.setForeground(Color.WHITE);
         panel.add(success);
         panel.setBackground(new Color(38, 38, 38, 236));
-        panel.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getred() / 255, ColourUtils.getgreen() / 255, ColourUtils.getred() / 255)));
+        panel.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255, ColourUtils.getGreen() / 255, ColourUtils.getRed() / 255)));
 
         frame.setVisible(true);
         frame.setResizable(false);

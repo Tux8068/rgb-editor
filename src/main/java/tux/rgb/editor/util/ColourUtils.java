@@ -9,22 +9,22 @@ import java.util.Random;
 
 public class ColourUtils {
 
-    public static float getred() {
+    public static float getRed() {
         Random red = new Random();
 
-        return  red.nextFloat(255);
+        return red.nextFloat() * 255; //We could remove *255 here and /255 in RgbGui.java
     }
 
-    public static float getgreen() {
+    public static float getGreen() {
         Random green = new Random();
 
-        return green.nextFloat(255);
+        return green.nextFloat() * 255;
     }
 
-    public static float getblue() {
+    public static float getBlue() {
         Random blue = new Random();
 
-        return blue.nextFloat(255);
+        return blue.nextFloat() * 255;
     }
 
 }
