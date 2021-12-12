@@ -23,11 +23,11 @@ public class RgbGui implements ActionListener {
     private static JTextField valHexR, valHexG, valHexB, valDir;
 
     private static JButton button;
-    private static JPanel panel = new JPanel();
+    private static final JPanel panel = new JPanel();
 
-    private static int redPercent = 0;
-    private static int greenPercent = 0;
-    private static int bluePercent = 0;
+    private static final int redPercentf = 0;
+    private static final int greenPercentf = 0;
+    private static final int bluePercentf = 0;
 
     public static void main(String[] args) {
         Image icon = Toolkit.getDefaultToolkit().getImage("src\\main\\resources\\softwarelogo.jpg");
@@ -116,7 +116,7 @@ public class RgbGui implements ActionListener {
 
         File filedir = new File(valDir.getText());
         for (File f : SearchUtil.getContaining(filedir)) {
-            if (f.getName().endsWith(".png")) {
+            if (f.getName().endsWith(".png") || f.getName().endsWith(".PNG") ) {
                 System.out.println(f.getPath());
                 success.setText("Found Directory: " + filedir);
 
@@ -131,11 +131,15 @@ public class RgbGui implements ActionListener {
                             int green = (pixel >> 8) & 0xff;
                             int blue = pixel & 0xff;
 
-                            redPercent = (int) (Float.parseFloat(valHexR.getText()) / 255);
-                            greenPercent = (int) (Float.parseFloat(valHexG.getText()) / 255);
-                            bluePercent = (int) (Float.parseFloat(valHexB.getText()) / 255);
+                            Float redfloat = Float.parseFloat(valHexR.getText()) / 255;
+                            Float greenfloat = Float.parseFloat(valHexG.getText()) / 255;
+                            Float bluefloat = Float.parseFloat(valHexB.getText()) / 255;
 
-                            pixel = (alpha << 24) | (redPercent * red / 100 << 16) | (greenPercent * green / 100 << 8) | (bluePercent * blue / 100);
+                            int redint = redfloat.intValue();
+                            int greenint = greenfloat.intValue();
+                            int blueint = bluefloat.intValue();
+
+                            pixel = (alpha << 24) | (redint * red / 100 << 16) | (greenint * green / 100 << 8) | (blueint * blue / 100);
 
                             image.setRGB(x, y, pixel);
                         }

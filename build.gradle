@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'tux.rgb.editor'
-version '1.0-SNAPSHOT'
+version 'v1.0'
 
 repositories {
     mavenCentral()
