@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 
 public class SearchUtil {
 
-
-
     public static List<File> search(Path dir) throws IOException {
         return Files.walk(Paths.get(String.valueOf(dir)))
                 .filter(Files::isRegularFile)
