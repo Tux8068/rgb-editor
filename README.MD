@@ -7,7 +7,6 @@ Links to people that made this possible:
 - https://github.com/onion   (Bug fixer)
 - https://github.com/Kami147 (Bug fixer)
 
-
 The RGB Changer tool is a Work in progress tool to  automatically modify images, 
 I made this tool to make new Minecraft texture packs, but it can be used for much more.
 
@@ -26,6 +25,8 @@ I made this tool to make new Minecraft texture packs, but it can be used for muc
 
 - As previously stated, this is new & a work in progress. expect bugs.
 - Don't use main directories such as C:/downloads etc. - this will likely cause a crash.
+- Beware - the more images you're editing, the longer it'll take. in the future add a progress bar?
+- Currently all images you modify will be modified forever, make sure you make backups. (will add confirm screen soon)
 
 
 # Swag penguin says hi!
