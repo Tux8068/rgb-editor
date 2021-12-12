@@ -111,54 +111,13 @@ public class RgbGui implements ActionListener {
 
         valDir.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
 
-
         File filedir = new File(valDir.getText());
-
-        System.out.println(filedir);
-
-        if (filedir.isDirectory()) {
-            Path path = filedir.toPath();
-            success.setText("Found Directory: " + filedir);
-           /* ArrayList<File> files = new ArrayList();
-
-            try {
-                SearchUtil.search(path)
-                        .stream().filter(f -> f.getName().endsWith(".png"))
-                        .forEach(files::add);
-
-                File inputImage = new File(files);
-                BufferedImage image = ImageIO.read(inputImage);
-
-                for (int y = 0; y < image.getHeight(); y++) {
-                    for (int x = 0; x < image.getWidth(); x++) {
-                        int pixel = image.getRGB(x, y);
-
-                        int alpha = (pixel >> 24) & 0xff;
-                        int red = (pixel >> 16) & 0xff;
-                        int green = (pixel >> 8) & 0xff;
-                        int blue = pixel & 0xff;
-
-                        redPercent = (int) (Float.parseFloat(valHexR.getText()) / 255);
-                        greenPercent = (int) (Float.parseFloat(valHexR.getText()) / 255);
-                        bluePercent = (int) (Float.parseFloat(valHexR.getText()) / 255);
-
-                        pixel = (alpha << 24) | (redPercent * red / 100 << 16) | (greenPercent * green / 100 << 8) | (bluePercent * blue / 100);
-
-                        image.setRGB(x, y, pixel);
-                    }
-                }
-
-                ImageIO.write(image, "png", new File(("C:\\Users\\FiercePC\\Downloads\\test\\test2.png")));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                success.setText("Failed to save.");
-            }
-
-*/
-        } else {
-            success.setText("Failed to filter.");
+        for(File f : SearchUtil.getContaining(filedir)){
+            System.out.println(f.getPath());
         }
     }
+
+
 }
 
 
