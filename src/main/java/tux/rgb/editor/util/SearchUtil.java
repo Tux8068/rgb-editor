@@ -22,7 +22,6 @@ public class SearchUtil {
     }
 
     public static List<File> getContaining(File file){
-        System.out.println(file);
         List<File> allFiles = new ArrayList<File>();
         File[] containing = file.listFiles();
         for (int i = 0; i < containing.length; i++) { //Thanks stack overflow :3 (https://stackoverflow.com/questions/5694385/getting-the-filenames-of-all-files-in-a-folder)
@@ -30,7 +29,6 @@ public class SearchUtil {
                // System.out.println("File " + containing[i].getName());
                 allFiles.add(containing[i]);
             } else if (containing[i].isDirectory()) {
-               // System.out.println("Directory " + containing[i].getName());
                 for(File f : getContaining(containing[i])) allFiles.add(f);
             }
         }
