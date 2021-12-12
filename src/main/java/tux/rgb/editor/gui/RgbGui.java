@@ -143,10 +143,11 @@ public class RgbGui implements ActionListener {
 
                     ImageIO.write(image, "png", new File(String.valueOf((f))));
                 } catch (IOException ex) {
+                    success.setText("Failed to save.");
                     ex.printStackTrace();
                 }
 
-                success.setText("Failed to save.");
+                success.setText("Finished!");
             }
 
         }
