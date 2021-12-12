@@ -7,6 +7,10 @@ Links to people that made this possible:
 - https://github.com/onion   (Bug fixer)
 - https://github.com/Kami147 (Bug fixer)
 
+# Results
+
+![image](https://i.imgur.com/xGyr8EU.jpg)
+
 The RGB Changer tool is a Work in progress tool to  automatically modify images, 
 I made this tool to make new Minecraft texture packs, but it can be used for much more.
 
