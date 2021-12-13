@@ -25,6 +25,7 @@ public class RgbGui implements ActionListener {
 
     private static JButton button;
     private static final JPanel panel = new JPanel();
+
     private static Image icon;
 
     public static void main(String[] args) {
@@ -91,7 +92,7 @@ public class RgbGui implements ActionListener {
         panel.add(button);
 
         success = new JLabel("");
-        success.setBounds(10, 170, 450, 25);
+        success.setBounds(10, 175, 450, 25);
         success.setFont(new Font("SansSerif", Font.ITALIC, 12));
         success.setForeground(Color.WHITE);
         panel.add(success);
@@ -120,6 +121,7 @@ public class RgbGui implements ActionListener {
             if (f.getName().endsWith(".png") || f.getName().endsWith(".PNG")) {
                 System.out.println(f.getPath());
                 success.setText("Found Directory: " + filedir);
+
 
                 try {
                     BufferedImage image = ImageIO.read(f);
@@ -164,7 +166,10 @@ public class RgbGui implements ActionListener {
                     log.write(System.lineSeparator() + "| | \\ \\| |__| | |_) |     | |____| |__| || |_   | | | |__| | | \\ \\  ");
                     log.write(System.lineSeparator() + "|_|  \\_\\\\_____|____/      |______|_____/_____|  |_|  \\____/|_|  \\_\\");
 
-                    log.write(System.lineSeparator() + "Values: "  + "RedValue: " + valHexR.getText() + " GreenValue: " + valHexG.getText() + " BlueValue: " + valHexB.getText() + System.lineSeparator() + "Directory: " + filedir);
+                     Color rgbtohex = new Color(Float.parseFloat(valHexR.getText()) / 255,Float.parseFloat(valHexG.getText()) / 255,Float.parseFloat(valHexB.getText()) / 255);
+                     String hex = "#"+Integer.toHexString(rgbtohex.getRGB()).substring(2);
+
+                    log.write(System.lineSeparator() + "Values: "  + "RedValue: " + valHexR.getText() + " GreenValue: " + valHexG.getText() + " BlueValue: " + valHexB.getText() + System.lineSeparator() + "HexValue: " + hex + System.lineSeparator() + "Directory: " + filedir);
                     log.close();
 
                 } catch (IOException ex) {
@@ -172,7 +177,7 @@ public class RgbGui implements ActionListener {
                     ex.printStackTrace();
                 }
 
-                success.setText("Finished!");
+                success.setText("Finished modifying images.");
             }
 
         }
