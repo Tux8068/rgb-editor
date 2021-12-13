@@ -25,10 +25,14 @@ public class RgbGui implements ActionListener {
 
     private static JButton button;
     private static final JPanel panel = new JPanel();
+    private static Image icon;
 
     public static void main(String[] args) {
-        Image icon = Toolkit.getDefaultToolkit().getImage("src\\main\\resources\\softwarelogo.jpg");
-
+        try {
+            icon = ImageIO.read(RgbGui.class.getResource("/images/softwarelogo.jpg"));
+        }catch(Exception e){
+            System.out.println("Error finding logo");
+        }
         JFrame frame = new JFrame("RGB Changer");
         frame.setSize(475, 315);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
