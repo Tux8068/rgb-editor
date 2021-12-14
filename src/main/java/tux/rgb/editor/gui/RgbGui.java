@@ -30,12 +30,18 @@ public class RgbGui implements ActionListener {
 
     private static Image icon;
 
-        public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, FontFormatException {
+        System.out.println("Starting " + ColourUtil.RED + "R" + ColourUtil.GREEN + "G" + ColourUtil.BLUE + "B" + ColourUtil.RESET + " Changer");
+
         try {
             icon = ImageIO.read(Objects.requireNonNull(RgbGui.class.getResource("/images/softwarelogo.jpg")));
         } catch (Exception e) {
-            System.out.println("Error finding logo");
+            System.out.println(ColourUtil.RED + "Error finding logo");
         }
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\main\\resources\\fonts\\Comfortaa.ttf")));
+
         JFrame frame = new JFrame("RGB Changer");
 
         frame.setSize(475, 315);
@@ -45,51 +51,55 @@ public class RgbGui implements ActionListener {
         panel.setLayout(null);
 
         JLabel rval = new JLabel("Red Value: ");
-        rval.setBounds(10, 30, 80, 25);
+        rval.setBounds(10, 30, 100, 35);
         rval.setForeground(Color.WHITE);
         rval.setFont(new Font("Arial", Font.ITALIC, 12));
         panel.add(rval);
 
         JLabel gval = new JLabel("Green Value: ");
-        gval.setBounds(10, 60, 80, 25);
+        gval.setBounds(10, 60, 100, 35);
         gval.setForeground(Color.WHITE);
         gval.setFont(new Font("Arial", Font.ITALIC, 12));
         panel.add(gval);
 
         JLabel bval = new JLabel("Blue Value: ");
-        bval.setBounds(10, 90, 80, 25);
+        bval.setBounds(10, 90, 100, 35);
         bval.setForeground(Color.WHITE);
         bval.setFont(new Font("Arial", Font.ITALIC, 12));
         panel.add(bval);
 
         JLabel dirval = new JLabel("Directory Value: ");
-        dirval.setBounds(10, 120, 80, 25);
+        dirval.setBounds(10, 120, 100, 35);
         dirval.setForeground(Color.WHITE);
         dirval.setFont(new Font("Arial", Font.ITALIC, 12));
         panel.add(dirval);
 
         valHexR = new JTextField(20);
         valHexR.setBounds(100, 30, 165, 25);
-        valHexR.setBorder(BorderFactory.createLineBorder(new Color(255, 220, 228)));
+        valHexR.setBorder(BorderFactory.createLineBorder(new Color(255, 220, 228), 2, true));
+        valHexR.setFont(new Font("Comfortaa", Font.BOLD, 12));
         panel.add(valHexR);
 
         valHexG = new JTextField(20);
         valHexG.setBounds(100, 60, 165, 25);
-        valHexG.setBorder(BorderFactory.createLineBorder(new Color(228, 246, 223)));
+        valHexG.setBorder(BorderFactory.createLineBorder(new Color(228, 246, 223), 2, true));
+        valHexG.setFont(new Font("Comfortaa", Font.BOLD, 12));
         panel.add(valHexG);
 
         valHexB = new JTextField(20);
         valHexB.setBounds(100, 90, 165, 25);
-        valHexB.setBorder(BorderFactory.createLineBorder(new Color(195, 239, 255)));
+        valHexB.setBorder(BorderFactory.createLineBorder(new Color(195, 239, 255), 2, true));
+        valHexB.setFont(new Font("Comfortaa", Font.BOLD, 12));
         panel.add(valHexB);
 
         valDir = new JTextField(20);
         valDir.setBounds(100, 120, 165, 25);
+
         panel.add(valDir);
 
         button = new JButton("CONFIRM: ");
         button.setBounds(100, 150, 165, 25);
-        button.setFont(new Font("Consolas", Font.ITALIC, 12));
+        button.setFont(new Font("Comfortaa", Font.BOLD, 12));
         button.addActionListener(new RgbGui());
         button.setBorder(BorderFactory.createLineBorder(new Color(0, 174, 255)));
         panel.add(button);
@@ -119,7 +129,7 @@ public class RgbGui implements ActionListener {
         int blueint = (int) bluefloat;
 
         if (redint <= 255 && greenint <= 255 && blueint <= 255) {
-            if (redint > 0 && greenint > 0 && blueint > 0) {
+            if (redint >= 0 && greenint >= 0 && blueint >= 0) {
 
                 System.out.println(" R: " + valHexR.getText() + " G: " + valHexG.getText() + " B: " + valHexB.getText());
                 button.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255), 2, false));
@@ -134,11 +144,11 @@ public class RgbGui implements ActionListener {
                 File filedir = new File(valDir.getText());
                 for (File f : SearchUtil.getContaining(filedir)) {
                     if (f.getName().endsWith(".png") || f.getName().endsWith(".PNG")) {
-                        System.out.println(f.getPath());
                         success.setText("Found Directory: " + filedir);
 
                         try {
-                            success.setText("Attempting to modify images.");
+                            success.setText("Attempting to modify image: " + f.getName());
+                            System.out.println(ColourUtil.YELLOW + "Attempting to modify image: " + f.getName());
 
                             BufferedImage image = ImageIO.read(f);
                             for (int y = 0; y < image.getHeight(); y++) {
@@ -160,7 +170,7 @@ public class RgbGui implements ActionListener {
 
                             File logfile = new File("log.txt");
                             if (logfile.createNewFile()) {
-                                System.out.println("log.txt made.");
+                                System.out.println(ColourUtil.GREEN + "log.txt made.");
                             }
 
                             ImageIO.write(image, "png", new File(String.valueOf((f))));
@@ -181,23 +191,36 @@ public class RgbGui implements ActionListener {
                             log.close();
 
                         } catch (IOException ex) {
-                            success.setText("Failed to save.");
+                            success.setText("Failed to save." + f.getName());
+                            System.out.println(ColourUtil.RED + "Failed to modify image: " + f.getName());
                             ex.printStackTrace();
                         }
 
                         success.setText("Finished modifying images.");
+                        System.out.println(ColourUtil.GREEN + "Finished modifying image: " + f.getName());
                     }
-
                 }
 
+                System.out.println(ColourUtil.PURPLE + "Finished editing images.");
             } else {
                 success.setText("Values are below 0.");
+                System.out.println(ColourUtil.RED + "Values are below 0.");
+                try {
+                    Thread.sleep(2000);
+                    success.setText("");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
             success.setText("Values are over 255.");
+            System.out.println(ColourUtil.RED + "Values are over 255.");
 
         }
+
+
     }
 }
+
 
 
