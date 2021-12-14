@@ -1,6 +1,6 @@
 package tux.rgb.editor.gui;
 
-import tux.rgb.editor.util.ColourUtils;
+import tux.rgb.editor.util.ColourUtil;
 import tux.rgb.editor.util.SearchUtil;
 
 import javax.imageio.ImageIO;
@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author Tuxiscool
@@ -20,7 +21,7 @@ import java.io.IOException;
 
 public class RgbGui implements ActionListener {
 
-    private static JLabel success, Rval, Gval, Bval, Dirval;
+    private static JLabel success;
     private static JTextField valHexR, valHexG, valHexB, valDir;
 
     private static JButton button;
@@ -30,8 +31,8 @@ public class RgbGui implements ActionListener {
 
     public static void main(String[] args) {
         try {
-            icon = ImageIO.read(RgbGui.class.getResource("/images/softwarelogo.jpg"));
-        }catch(Exception e){
+            icon = ImageIO.read(Objects.requireNonNull(RgbGui.class.getResource("/images/softwarelogo.jpg")));
+        } catch (Exception e) {
             System.out.println("Error finding logo");
         }
         JFrame frame = new JFrame("RGB Changer");
@@ -41,43 +42,43 @@ public class RgbGui implements ActionListener {
         frame.add(panel);
         panel.setLayout(null);
 
-        Rval = new JLabel("Red Value: ");
-        Rval.setBounds(10, 30, 80, 25);
-        Rval.setForeground(Color.WHITE);
-        Rval.setFont(new Font("Arial", Font.ITALIC, 12));
-        panel.add(Rval);
+        JLabel rval = new JLabel("Red Value: ");
+        rval.setBounds(10, 30, 80, 25);
+        rval.setForeground(Color.WHITE);
+        rval.setFont(new Font("Arial", Font.ITALIC, 12));
+        panel.add(rval);
 
-        Gval = new JLabel("Green Value: ");
-        Gval.setBounds(10, 60, 80, 25);
-        Gval.setForeground(Color.WHITE);
-        Gval.setFont(new Font("Arial", Font.ITALIC, 12));
-        panel.add(Gval);
+        JLabel gval = new JLabel("Green Value: ");
+        gval.setBounds(10, 60, 80, 25);
+        gval.setForeground(Color.WHITE);
+        gval.setFont(new Font("Arial", Font.ITALIC, 12));
+        panel.add(gval);
 
-        Bval = new JLabel("Blue Value: ");
-        Bval.setBounds(10, 90, 80, 25);
-        Bval.setForeground(Color.WHITE);
-        Bval.setFont(new Font("Arial", Font.ITALIC, 12));
-        panel.add(Bval);
+        JLabel bval = new JLabel("Blue Value: ");
+        bval.setBounds(10, 90, 80, 25);
+        bval.setForeground(Color.WHITE);
+        bval.setFont(new Font("Arial", Font.ITALIC, 12));
+        panel.add(bval);
 
-        Dirval = new JLabel("Directory Value: ");
-        Dirval.setBounds(10, 120, 80, 25);
-        Dirval.setForeground(Color.WHITE);
-        Dirval.setFont(new Font("Arial", Font.ITALIC, 12));
-        panel.add(Dirval);
+        JLabel dirval = new JLabel("Directory Value: ");
+        dirval.setBounds(10, 120, 80, 25);
+        dirval.setForeground(Color.WHITE);
+        dirval.setFont(new Font("Arial", Font.ITALIC, 12));
+        panel.add(dirval);
 
         valHexR = new JTextField(20);
         valHexR.setBounds(100, 30, 165, 25);
-        valHexR.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getBlue() / 255 / 2)));
+        valHexR.setBorder(BorderFactory.createLineBorder(new Color(255, 220, 228)));
         panel.add(valHexR);
 
         valHexG = new JTextField(20);
         valHexG.setBounds(100, 60, 165, 25);
-        valHexG.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getBlue() / 255 / 2)));
+        valHexG.setBorder(BorderFactory.createLineBorder(new Color(228, 246, 223)));
         panel.add(valHexG);
 
         valHexB = new JTextField(20);
         valHexB.setBounds(100, 90, 165, 25);
-        valHexB.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255 / 2, ColourUtils.getGreen() / 255 / 2, ColourUtils.getBlue() / 255 / 2)));
+        valHexB.setBorder(BorderFactory.createLineBorder(new Color(195, 239, 255)));
         panel.add(valHexB);
 
         valDir = new JTextField(20);
@@ -97,7 +98,7 @@ public class RgbGui implements ActionListener {
         success.setForeground(Color.WHITE);
         panel.add(success);
         panel.setBackground(new Color(38, 38, 38, 236));
-        panel.setBorder(BorderFactory.createLineBorder(new Color(ColourUtils.getRed() / 255, ColourUtils.getGreen() / 255, ColourUtils.getBlue() / 255)));
+        panel.setBorder(BorderFactory.createLineBorder(new Color(ColourUtil.getRed() / 255, ColourUtil.getGreen() / 255, ColourUtil.getBlue() / 255)));
 
         frame.setVisible(true);
         frame.setResizable(false);
@@ -106,84 +107,95 @@ public class RgbGui implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        System.out.println(" R: " + valHexR.getText() + " G: " + valHexG.getText() + " B: " + valHexB.getText());
-        button.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
-        panel.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
 
-        valHexR.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
-        valHexG.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
-        valHexB.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
+        float redfloat = Float.parseFloat(valHexR.getText());
+        float greenfloat = Float.parseFloat(valHexG.getText());
+        float bluefloat = Float.parseFloat(valHexB.getText());
 
-        valDir.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
+        int redint = (int) redfloat;
+        int greenint = (int) greenfloat;
+        int blueint = (int) bluefloat;
 
-        File filedir = new File(valDir.getText());
-        for (File f : SearchUtil.getContaining(filedir)) {
-            if (f.getName().endsWith(".png") || f.getName().endsWith(".PNG")) {
-                System.out.println(f.getPath());
-                success.setText("Found Directory: " + filedir);
+        if (redint <= 255 && greenint <= 255 && blueint <= 255) {
+            if (redint > 0 && greenint > 0 && blueint > 0) {
+
+                System.out.println(" R: " + valHexR.getText() + " G: " + valHexG.getText() + " B: " + valHexB.getText());
+                button.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
+                panel.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
+
+                valHexR.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
+                valHexG.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
+                valHexB.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
+
+                valDir.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
+
+                File filedir = new File(valDir.getText());
+                for (File f : SearchUtil.getContaining(filedir)) {
+                    if (f.getName().endsWith(".png") || f.getName().endsWith(".PNG")) {
+                        System.out.println(f.getPath());
+                        success.setText("Found Directory: " + filedir);
 
 
-                try {
-                    BufferedImage image = ImageIO.read(f);
-                    for (int y = 0; y < image.getHeight(); y++) {
-                        for (int x = 0; x < image.getWidth(); x++) {
-                            int pixel = image.getRGB(x, y);
+                        try {
+                            BufferedImage image = ImageIO.read(f);
+                            for (int y = 0; y < image.getHeight(); y++) {
+                                for (int x = 0; x < image.getWidth(); x++) {
+                                    int pixel = image.getRGB(x, y);
 
-                            int alpha = (pixel >> 24) & 0xff;
-                            int red = (pixel >> 16) & 0xff;
-                            int green = (pixel >> 8) & 0xff;
-                            int blue = pixel & 0xff;
+                                    int alpha = (pixel >> 24) & 0xff;
+                                    int red = (pixel >> 16) & 0xff;
+                                    int green = (pixel >> 8) & 0xff;
+                                    int blue = pixel & 0xff;
 
-                            Float redfloat = Float.parseFloat(valHexR.getText());
-                            Float greenfloat = Float.parseFloat(valHexG.getText());
-                            Float bluefloat = Float.parseFloat(valHexB.getText());
 
-                            int redint = redfloat.intValue();
-                            int greenint = greenfloat.intValue();
-                            int blueint = bluefloat.intValue();
+                                    pixel = (alpha << 24) | (redint * red / 100 << 16) | (greenint * green / 100 << 8) | (blueint * blue / 100);
 
-                            pixel = (alpha << 24) | (redint * red / 100 << 16) | (greenint * green / 100 << 8) | (blueint * blue / 100);
+                                    success.setText("Attempting to modify images.");
 
-                            success.setText("Attempting to modify images.");
+                                    image.setRGB(x, y, pixel);
+                                }
+                            }
 
-                            image.setRGB(x, y, pixel);
+                            File logfile = new File("log.txt");
+                            if (logfile.createNewFile()) {
+                                System.out.println("log.txt made.");
+                            }
+
+                            ImageIO.write(image, "png", new File(String.valueOf((f))));
+
+                            FileWriter log = new FileWriter("log.txt");
+
+                            log.write("_____   _____ ____        ______ _____ _____ _______ ____  _____   ");
+                            log.write(System.lineSeparator() + "|  __ \\ / ____|  _ \\      |  ____|  __ \\_   _|__   __/ __ \\|  __ \\  ");
+                            log.write(System.lineSeparator() + "| |__) | |  __| |_) |_____| |__  | |  | || |    | | | |  | | |__) | ");
+                            log.write(System.lineSeparator() + "|  _  /| | |_ |  _ <______|  __| | |  | || |    | | | |  | |  _  /  ");
+                            log.write(System.lineSeparator() + "| | \\ \\| |__| | |_) |     | |____| |__| || |_   | | | |__| | | \\ \\  ");
+                            log.write(System.lineSeparator() + "|_|  \\_\\\\_____|____/      |______|_____/_____|  |_|  \\____/|_|  \\_\\");
+
+                            Color rgbtohex = new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255);
+                            String hex = "#" + Integer.toHexString(rgbtohex.getRGB()).substring(2);
+
+                            log.write(System.lineSeparator() + "Values: " + "RedValue: " + valHexR.getText() + " GreenValue: " + valHexG.getText() + " BlueValue: " + valHexB.getText() + System.lineSeparator() + "HexValue: " + hex + System.lineSeparator() + "Directory: " + filedir);
+                            log.close();
+
+                        } catch (IOException ex) {
+                            success.setText("Failed to save.");
+                            ex.printStackTrace();
                         }
+
+                        success.setText("Finished modifying images.");
                     }
 
-                    File logfile = new File("log.txt");
-                    if (logfile.createNewFile()) {
-                        System.out.println("log.txt made.");
-                    }
-
-                    ImageIO.write(image, "png", new File(String.valueOf((f))));
-
-                    FileWriter log = new FileWriter("log.txt");
-
-                    log.write("_____   _____ ____        ______ _____ _____ _______ ____  _____   ");
-                    log.write(System.lineSeparator() + "|  __ \\ / ____|  _ \\      |  ____|  __ \\_   _|__   __/ __ \\|  __ \\  ");
-                    log.write(System.lineSeparator() + "| |__) | |  __| |_) |_____| |__  | |  | || |    | | | |  | | |__) | ");
-                    log.write(System.lineSeparator() + "|  _  /| | |_ |  _ <______|  __| | |  | || |    | | | |  | |  _  /  ");
-                    log.write(System.lineSeparator() + "| | \\ \\| |__| | |_) |     | |____| |__| || |_   | | | |__| | | \\ \\  ");
-                    log.write(System.lineSeparator() + "|_|  \\_\\\\_____|____/      |______|_____/_____|  |_|  \\____/|_|  \\_\\");
-
-                     Color rgbtohex = new Color(Float.parseFloat(valHexR.getText()) / 255,Float.parseFloat(valHexG.getText()) / 255,Float.parseFloat(valHexB.getText()) / 255);
-                     String hex = "#"+Integer.toHexString(rgbtohex.getRGB()).substring(2);
-
-                    log.write(System.lineSeparator() + "Values: "  + "RedValue: " + valHexR.getText() + " GreenValue: " + valHexG.getText() + " BlueValue: " + valHexB.getText() + System.lineSeparator() + "HexValue: " + hex + System.lineSeparator() + "Directory: " + filedir);
-                    log.close();
-
-                } catch (IOException ex) {
-                    success.setText("Failed to save.");
-                    ex.printStackTrace();
                 }
 
-                success.setText("Finished modifying images.");
+            } else {
+                success.setText("Values are below 0.");
             }
-
+        } else {
+            success.setText("Values are over 255.");
         }
 
     }
 }
-
 
 

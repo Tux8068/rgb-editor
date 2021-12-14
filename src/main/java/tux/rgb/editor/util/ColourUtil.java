@@ -7,7 +7,7 @@ import java.util.Random;
  * @since 11/12/21
  */
 
-public class ColourUtils {
+public class ColourUtil {
 
     public static float getRed() {
         Random red = new Random();
