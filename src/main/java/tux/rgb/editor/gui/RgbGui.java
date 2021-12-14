@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -31,6 +33,7 @@ public class RgbGui implements ActionListener {
 
     private static Image icon;
 
+
     public static void main(String[] args) {
         System.out.println("Starting " + ColourUtil.RED + "R" + ColourUtil.GREEN + "G" + ColourUtil.BLUE + "B" + ColourUtil.RESET + " Changer");
 
@@ -44,13 +47,12 @@ public class RgbGui implements ActionListener {
         InputStream fontStream = null;
 
         try {
-            //We have to read it as an InputStream because if you use a File type it will simply throw an error
             fontStream = RgbGui.class.getResourceAsStream("/fonts/Comfortaa.ttf");
-            //fontFile = new File(Objects.requireNonNull(RgbGui.class.getResource("/fonts/Comfortaa.ttf")).getFile());
+
         } catch (Exception e) {
             System.out.println(ColourUtil.RED + "Error finding Comfortaa.ttf "+e);
         }
-        
+
         if(fontStream != null) {
             try {
                 ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, fontStream));
@@ -58,7 +60,6 @@ public class RgbGui implements ActionListener {
                 System.out.println("Couldn't set Font " + e);
             }
         }
-        //ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\main\\resources\\fonts\\Comfortaa.ttf"))); //You can't read files like this when they're compiled smh
 
         JFrame frame = new JFrame("RGB Changer");
 
@@ -112,7 +113,8 @@ public class RgbGui implements ActionListener {
 
         valDir = new JTextField(20);
         valDir.setBounds(100, 120, 165, 25);
-
+        valDir.setFont(new Font("Comfortaa", Font.BOLD, 12));
+        valDir.setBorder(BorderFactory.createLineBorder(new Color(9, 9, 9), 1, false));
         panel.add(valDir);
 
         button = new JButton("CONFIRM: ");
@@ -137,6 +139,7 @@ public class RgbGui implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        Instant start = Instant.now();
 
         float redfloat = Float.parseFloat(valHexR.getText());
         float greenfloat = Float.parseFloat(valHexG.getText());
@@ -192,8 +195,10 @@ public class RgbGui implements ActionListener {
                             }
 
                             ImageIO.write(image, "png", new File(String.valueOf((f))));
-
                             FileWriter log = new FileWriter("log.txt");
+
+                            Instant finish = Instant.now();
+                            long timeElapsed = Duration.between(start, finish).toMillis();
 
                             log.write("_____   _____ ____        ______ _____ _____ _______ ____  _____   ");
                             log.write(System.lineSeparator() + "|  __ \\ / ____|  _ \\      |  ____|  __ \\_   _|__   __/ __ \\|  __ \\  ");
@@ -205,7 +210,7 @@ public class RgbGui implements ActionListener {
                             Color rgbtohex = new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255);
                             String hex = "#" + Integer.toHexString(rgbtohex.getRGB()).substring(2);
 
-                            log.write(System.lineSeparator() + "Values: " + "RedValue: " + valHexR.getText() + " GreenValue: " + valHexG.getText() + " BlueValue: " + valHexB.getText() + System.lineSeparator() + "HexValue: " + hex + System.lineSeparator() + "Directory: " + filedir);
+                            log.write(System.lineSeparator() + "Values: " + "RedValue: " + valHexR.getText() + " GreenValue: " + valHexG.getText() + " BlueValue: " + valHexB.getText() + System.lineSeparator() + "HexValue: " + hex + System.lineSeparator() + "Directory: " + filedir + System.lineSeparator() + "Completed in: " + timeElapsed + "ms");
                             log.close();
 
                         } catch (IOException ex) {
