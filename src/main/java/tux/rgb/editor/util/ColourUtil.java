@@ -1,5 +1,7 @@
 package tux.rgb.editor.util;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Random;
 
 /**
@@ -25,6 +27,7 @@ public class ColourUtil {
         Random blue = new Random();
 
         return blue.nextFloat() * 255;
+
+        }
     }
 
-}

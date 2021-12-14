@@ -3,6 +3,7 @@ package tux.rgb.editor.gui;
 import tux.rgb.editor.util.ColourUtil;
 import tux.rgb.editor.util.SearchUtil;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -29,13 +30,14 @@ public class RgbGui implements ActionListener {
 
     private static Image icon;
 
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         try {
             icon = ImageIO.read(Objects.requireNonNull(RgbGui.class.getResource("/images/softwarelogo.jpg")));
         } catch (Exception e) {
             System.out.println("Error finding logo");
         }
         JFrame frame = new JFrame("RGB Changer");
+
         frame.setSize(475, 315);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setIconImage(icon);
@@ -89,7 +91,7 @@ public class RgbGui implements ActionListener {
         button.setBounds(100, 150, 165, 25);
         button.setFont(new Font("Consolas", Font.ITALIC, 12));
         button.addActionListener(new RgbGui());
-        button.setBorder(BorderFactory.createLineBorder(new Color(0xFF00AEFF, true)));
+        button.setBorder(BorderFactory.createLineBorder(new Color(0, 174, 255)));
         panel.add(button);
 
         success = new JLabel("");
@@ -98,7 +100,7 @@ public class RgbGui implements ActionListener {
         success.setForeground(Color.WHITE);
         panel.add(success);
         panel.setBackground(new Color(38, 38, 38, 236));
-        panel.setBorder(BorderFactory.createLineBorder(new Color(ColourUtil.getRed() / 255, ColourUtil.getGreen() / 255, ColourUtil.getBlue() / 255)));
+        panel.setBorder(BorderFactory.createLineBorder(new Color(ColourUtil.getRed() / 255, ColourUtil.getGreen() / 255, ColourUtil.getBlue() / 255), 2, false));
 
         frame.setVisible(true);
         frame.setResizable(false);
@@ -120,7 +122,7 @@ public class RgbGui implements ActionListener {
             if (redint > 0 && greenint > 0 && blueint > 0) {
 
                 System.out.println(" R: " + valHexR.getText() + " G: " + valHexG.getText() + " B: " + valHexB.getText());
-                button.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
+                button.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255), 2, false));
                 panel.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
 
                 valHexR.setBorder(BorderFactory.createLineBorder(new Color(Float.parseFloat(valHexR.getText()) / 255, Float.parseFloat(valHexG.getText()) / 255, Float.parseFloat(valHexB.getText()) / 255)));
@@ -135,8 +137,9 @@ public class RgbGui implements ActionListener {
                         System.out.println(f.getPath());
                         success.setText("Found Directory: " + filedir);
 
-
                         try {
+                            success.setText("Attempting to modify images.");
+
                             BufferedImage image = ImageIO.read(f);
                             for (int y = 0; y < image.getHeight(); y++) {
                                 for (int x = 0; x < image.getWidth(); x++) {
@@ -150,7 +153,6 @@ public class RgbGui implements ActionListener {
 
                                     pixel = (alpha << 24) | (redint * red / 100 << 16) | (greenint * green / 100 << 8) | (blueint * blue / 100);
 
-                                    success.setText("Attempting to modify images.");
 
                                     image.setRGB(x, y, pixel);
                                 }
@@ -193,8 +195,8 @@ public class RgbGui implements ActionListener {
             }
         } else {
             success.setText("Values are over 255.");
-        }
 
+        }
     }
 }
 
