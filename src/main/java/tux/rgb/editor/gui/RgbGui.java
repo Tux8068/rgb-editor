@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -30,7 +31,7 @@ public class RgbGui implements ActionListener {
 
     private static Image icon;
 
-    public static void main(String[] args) throws IOException, FontFormatException {
+    public static void main(String[] args) {
         System.out.println("Starting " + ColourUtil.RED + "R" + ColourUtil.GREEN + "G" + ColourUtil.BLUE + "B" + ColourUtil.RESET + " Changer");
 
         try {
@@ -40,7 +41,24 @@ public class RgbGui implements ActionListener {
         }
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\main\\resources\\fonts\\Comfortaa.ttf")));
+        InputStream fontStream = null;
+
+        try {
+            //We have to read it as an InputStream because if you use a File type it will simply throw an error
+            fontStream = RgbGui.class.getResourceAsStream("/fonts/Comfortaa.ttf");
+            //fontFile = new File(Objects.requireNonNull(RgbGui.class.getResource("/fonts/Comfortaa.ttf")).getFile());
+        } catch (Exception e) {
+            System.out.println(ColourUtil.RED + "Error finding Comfortaa.ttf "+e);
+        }
+        
+        if(fontStream != null) {
+            try {
+                ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, fontStream));
+            } catch (Exception e) {
+                System.out.println("Couldn't set Font " + e);
+            }
+        }
+        //ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src\\main\\resources\\fonts\\Comfortaa.ttf"))); //You can't read files like this when they're compiled smh
 
         JFrame frame = new JFrame("RGB Changer");
 
