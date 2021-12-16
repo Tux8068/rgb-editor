@@ -12,11 +12,12 @@ public class SearchUtil {
      */
 
     public static List<File> getContaining(File file){
-        List<File> allFiles = new ArrayList<File>();
+        List<File> allFiles = new ArrayList<>();
         File[] containing = file.listFiles();
-        for (int i = 0; i < containing.length; i++) {
-            if (containing[i].isFile()) allFiles.add(containing[i]);
-            else if (containing[i].isDirectory()) for(File f : getContaining(containing[i])) allFiles.add(f);
+        assert containing != null;
+        for (File value : containing) {
+            if (value.isFile()) allFiles.add(value);
+            else if (value.isDirectory()) allFiles.addAll(getContaining(value));
         }
         return allFiles;
     }

@@ -237,7 +237,7 @@ public class RgbGui implements ActionListener {
             }
         } else {
             success.setText("Values are over 255.");
-            System.out.println(ColourUtil.RED + "Values are over 255.");
+            System.out.println(ColourUtil.RED + "Values are over 255. ");
 
         }
 
